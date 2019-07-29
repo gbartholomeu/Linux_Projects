@@ -1,0 +1,66 @@
+# ~/.bashrc
+# .bash_profile
+
+#Alias
+alias ls='ls -GF' #-G para colorir o comando | -F mostra uma / após os arquivos que são diretórios |
+alias cl='clear && clear && clear && clear' #Limpa a tela 4 vezes para "resetar" o console
+alias ll='ls -l' #extra de -l para listar os arquivos
+
+#Função hist: History + opção de grep
+function hist(){
+	if [ -z "$1" ];
+  then
+    history
+  else
+    history | grep $1
+  fi
+}
+
+#Função psg: Função criada para mostrar os processos em execução. Se utilizado com um parâmetro, realizará um grep.
+function psg() {
+  if [ -z "$1" ];
+  then
+    ps aux
+  else
+    ps aux | grep $1
+  fi
+}
+
+#Comandos genéricos salvos
+##Exibir dois comandos lado a lado:
+# paste <(comando1) <(comando2) | column -s $'\t' -t
+
+##Lista os pacotes instalados | Apenas Linux
+#rpm -qa
+
+##Grep "básico": -r busca recursiva | -i Ignora case sensitive | -H printa o header do arquivo com o resultado | -e Regex | -I ignora binários | -l Lista apenas o nome do arquivo
+#grep ./* -riHI -e "qualquer texto"
+
+##Grep excluindo diretórios da busca
+#grep ./ -irIH -e "qualquerCoisa" --exclude-dir=diretorio <-Excluir diretório de busca do grep
+
+##Find básico para procurar o arquivo pelo nome. Pode ser utilizado -type para filtrar o tipo de arquivo, -newer para buscar mais novos que x arquivo|data e -not -newer para arquivos mais velhos que x arquivo|data
+#find ./* -name "*smb*"
+
+##Find com formatação para mostrar a data de modificação do arquivo.
+#find ./ -printf "%p %TY-%Tm-%Td \n" <- Comando para exibir o dia do arquivo no comando do find
+
+##Comando awk para remover a primeira linha do ls -l
+#ls -lhtr | awk '{if(NR>1)print}'
+
+##Type é utilizado para descrever algum tipo de arquivo, seja ele um alias, function, dir, etc.
+#type
+
+##Lista todos os serviços do ambiente
+#systemctl list-unit-files
+
+#Verificando memória (RAM)
+#ps -o pid,user,%mem,command ax | sort -b -k3 -r
+
+##Verificando arquivos presos no sistema:
+#lsof +L1 /backup -> Verificar qual sintaxe que substituirá o /backup
+
+##Watching awk command:
+#watch "ls -lht | awk '{print \$6,\$7,\$8,\$9}'"
+
+#ls -1 media_list-*-06-2019* | xargs -I % rm %
